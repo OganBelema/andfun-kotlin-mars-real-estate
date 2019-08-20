@@ -38,10 +38,10 @@ class OverviewViewModel : ViewModel() {
     private val scope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     // The internal MutableLiveData String that stores the status of the most recent request
-    private val _status = MutableLiveData<String>()
+    private val _status = MutableLiveData<MarsApiStatus>()
 
     // The external immutable LiveData for the request status String
-    val status: LiveData<String>
+    val status: LiveData<MarsApiStatus>
         get() = _status
 
     private val _properties = MutableLiveData<List<MarsProperty>>()
@@ -62,15 +62,21 @@ class OverviewViewModel : ViewModel() {
 
         scope.launch {
             try {
+                //set loading state
+                _status.value = MarsApiStatus.LOADING
+
                 val properties = MarsApi.marsApiService.getProperties()
+
+                //set success state
+                _status.value = MarsApiStatus.SUCCESS
 
                 if (properties.isNotEmpty()){
                     _properties.value = properties
                 }
 
-               // _status.value = "Success ${properties.size} Mars properties(ies)"
             } catch (exception: Exception){
-                _status.value = "Failure: " + exception.message
+                //set error state
+                _status.value = MarsApiStatus.ERROR
             }
         }
     }
