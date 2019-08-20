@@ -77,6 +77,9 @@ class OverviewViewModel : ViewModel() {
             } catch (exception: Exception){
                 //set error state
                 _status.value = MarsApiStatus.ERROR
+
+                //clear recyclerView
+                _properties.value = ArrayList()
             }
         }
     }
