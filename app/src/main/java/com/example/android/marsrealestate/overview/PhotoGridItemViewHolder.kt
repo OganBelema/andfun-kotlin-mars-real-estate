@@ -12,8 +12,9 @@ import com.example.android.marsrealestate.network.MarsProperty
 class PhotoGridItemViewHolder(private val gridViewItemBinding: GridViewItemBinding)
     : RecyclerView.ViewHolder(gridViewItemBinding.root) {
 
-    fun bind(property: MarsProperty){
+    fun bind(property: MarsProperty, clickListener: OnMarsPropertyItemClickListener){
         gridViewItemBinding.property = property
+        gridViewItemBinding.clickListener = clickListener
         gridViewItemBinding.executePendingBindings()
     }
 

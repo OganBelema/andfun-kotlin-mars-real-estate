@@ -21,14 +21,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.example.android.marsrealestate.network.MarsProperty
 
-class PhotoGridAdapter : ListAdapter<MarsProperty, PhotoGridItemViewHolder>(DiffCallback){
+class PhotoGridAdapter(private val clickListener: OnMarsPropertyItemClickListener) :
+        ListAdapter<MarsProperty, PhotoGridItemViewHolder>(DiffCallback){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoGridItemViewHolder {
         return PhotoGridItemViewHolder.from(parent)
     }
 
     override fun onBindViewHolder(holder: PhotoGridItemViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), clickListener)
     }
 
 }
