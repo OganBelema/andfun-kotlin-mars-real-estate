@@ -44,9 +44,9 @@ class OverviewViewModel : ViewModel() {
     val status: LiveData<String>
         get() = _status
 
-    private val _property = MutableLiveData<MarsProperty>()
-    val property: LiveData<MarsProperty>
-        get() = _property
+    private val _properties = MutableLiveData<List<MarsProperty>>()
+    val properties: LiveData<List<MarsProperty>>
+        get() = _properties
 
     /**
      * Call getMarsRealEstateProperties() on init so we can display status immediately.
@@ -65,10 +65,10 @@ class OverviewViewModel : ViewModel() {
                 val properties = MarsApi.marsApiService.getProperties()
 
                 if (properties.isNotEmpty()){
-                    _property.value = properties[0]
+                    _properties.value = properties
                 }
 
-               // _status.value = "Success ${properties.size} Mars property(ies)"
+               // _status.value = "Success ${properties.size} Mars properties(ies)"
             } catch (exception: Exception){
                 _status.value = "Failure: " + exception.message
             }
